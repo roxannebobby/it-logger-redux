@@ -3,24 +3,22 @@ import Moment from 'react';
 import PropTypes from 'prop-types';
 
 const LogItem = ({ log }) => {
-	console.log(log.attention);
+	console.log(log);
 	return (
-		<li className='collection-item'>
-			<div>
-				<a
-					href='#edit-log-modal'
-					className={`modal-trigger ${
-						log.attention ? 'red-text' : 'blue-text'
-					}`}
-				>
-					{log.message}
-				</a>
-				<br />
-				<span className='grey-text'>
-					<span className='black-text'>{log.tech}</span>
-				</span>
-			</div>
-		</li>
+		<>
+			<li className='collection-item'>
+				<div>
+					<a
+						href='#edit-log-modal'
+						className={`modal-trigger ${
+							log.attention ? 'red-text' : 'blue-text'
+						}`}
+					>
+						{log.message}
+					</a>
+				</div>
+			</li>
+		</>
 	);
 };
 

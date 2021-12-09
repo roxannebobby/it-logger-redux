@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import LogItem from './LogItem';
 
 const Logs = () => {
 	const [logs, setLogs] = useState([]);
@@ -9,7 +10,6 @@ const Logs = () => {
 		getLogs();
 		//eslint-disable-next-line
 	}, []);
-	console.log(logs);
 
 	const getLogs = async () => {
 		setLoading(true);
@@ -34,7 +34,7 @@ const Logs = () => {
 				{!loading && logs.length === 0 ? (
 					<p className='center'>No logs to show ... </p>
 				) : (
-					logs.map((log) => <li>{log.message}</li>)
+					logs.map((log) => <LogItem log={log} key={log.id} />)
 				)}
 			</ul>
 		</>
