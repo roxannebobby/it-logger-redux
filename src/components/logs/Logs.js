@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import LogItem from './LogItem';
+import PropTypes from 'prop-types';
 import Preloader from '../layout/Preloader';
+import { getLogs } from '../../actions/logActions';
 
-const Logs = () => {
-	const [logs, setLogs] = useState([]);
-	const [loading, setLoading] = useState(false);
-
+const Logs = ({ log: { logs, loading }, getLogs }) => {
 	// useEffect is like "DidMount" in class components; this is what we want to happen right at app mounting
 	useEffect(() => {
 		getLogs();
 		//eslint-disable-next-line
 	}, []);
 
-	const getLogs = async () => {
-		setLoading(true);
-		const res = await fetch('/logs');
-		// unlike axios here we need to set data to json type
-		const data = await res.json();
-
-		setLogs(data);
-		setLoading(false);
-	};
-
-	if (loading) {
+	if (loading || logs === null) {
 		return <Preloader />;
 	}
 
@@ -32,7 +22,7 @@ const Logs = () => {
 				<li className='collection-header'>
 					<h4 className='center'>System Logs</h4>
 				</li>
-				{!loading && logs.length === 0 ? (
+				{!loading || logs.length === 0 ? (
 					<p className='center'>No logs to show ... </p>
 				) : (
 					logs.map((log) => <LogItem log={log} key={log.id} />)
@@ -42,4 +32,11 @@ const Logs = () => {
 	);
 };
 
-export default Logs;
+Logs.propTypes = {
+	log: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+	log: state.log,
+});
+export default connect(mapStateToProps, { getLogs })(Logs);
