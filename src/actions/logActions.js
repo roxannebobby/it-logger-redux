@@ -1,6 +1,7 @@
 import { GET_LOGS, SET_LOADING, LOGS_ERROR } from './types';
 
 // one way to handle getting logs, the next options below is better
+
 // export const getLogs = () => {
 // 	return async (dispatch) => {
 // 		setLoading();
@@ -19,7 +20,6 @@ import { GET_LOGS, SET_LOADING, LOGS_ERROR } from './types';
 export const getLogs = () => async (dispatch) => {
 	try {
 		setLoading();
-
 		const res = await fetch('/logs');
 		const data = await res.json();
 
